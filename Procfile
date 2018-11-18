@@ -1,1 +1,1 @@
-web: python bottelega.py
+worker: python bottelega.py
