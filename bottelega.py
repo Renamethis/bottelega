@@ -44,7 +44,7 @@ def main():
                                 mybot.send_mess(last_chat_id, 'Good Morning!')
                         elif(12<=now.hour<17):
                                 mybot.send_mess(last_chat_id, 'Good Day!')
-                        elif(17<=hour<23):
+                        elif(17<=now.hour<23):
                                 mybot.send_mess(last_chat_id, 'Good evening!')
                         else:
                                 mybot.send_mess(last_chat_id, 'Why you,fucken bitch dont sleep?!')
