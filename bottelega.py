@@ -21,10 +21,10 @@ class BotHandler:
                 return response.json()['result']
 
 	def cmd_help(self,chat_id):
-		self.send_mess(chat_id,helpcmdstr)	 
+                self.send_mess(chat_id,helpcmdstr)	 
 	
-	def cmd_start(self,chat_id):
-		fci = open('ids.txt', 'r')
+        def cmd_start(self,chat_id):
+                fci = open('ids.txt', 'r')
 		k = 0
 		l = 0
 		for line in fci:
