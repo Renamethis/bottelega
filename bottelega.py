@@ -47,14 +47,14 @@ class BotHandler:
 		#p = switch.get(command, lambda: send_mess(chat_id,"Не существует такой команды"))
                 k=0
                 for st in switch:
-			if(command == st):
-				switch[command](chat_id)	
-				break
-			else:
-				k+=1
-		if(k == len(switch)):
-			self.send_mess(chat_id, "Не существует такой команды")
-	def last_update(self):
+                        if(command == st):
+                                switch[command](chat_id)	
+                                break
+                        else:
+                                k+=1
+                if(k == len(switch)):
+                        self.send_mess(chat_id, "Не существует такой команды")
+        def last_update(self):
                 get_result = self.get_updates()
                 if len(get_result) > 0:
                         last_update = get_result[len(get_result)-1]
