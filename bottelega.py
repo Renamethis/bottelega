@@ -12,7 +12,11 @@ class BotHandler:
                 self.token = token
                 self.api_url = "https://api.telegram.org/bot{}/".format(token)
                 self.meduza = ' '
-                self.cnn = ' '
+                self.newsapi = {
+                        'CNN':' ',
+                        'BBC':' ',
+                        'Lenta':' '
+                        }
 
         def get_updates(self,offset=None,timeout=30):
                 params = {'timeout:': timeout, 'offset': offset}
@@ -74,18 +78,18 @@ class BotHandler:
                 response = requests.post(self.api_url + 'sendPhoto', params)
                 return response
         
-        def send_cnn_news(self):
-                rsp = requests.get(cnn)
+        def send_newsapi_news(self,new,url):
+                rsp = requests.get(url)
                 news = rsp.json()['articles']
                 z = news[0]['publishedAt']
-                if(z!=self.cnn):
-                        self.cnn = z
+                if(z!=self.newsapi[new]):
+                        self.newsapi[new] = z
                         fci = open('ids.txt', 'r')
                         #title = translator.translate({news[0]['content']},dest='ru')
                         #print(title)
                         for line in fci:
                                 try:
-                                        self.send_photo(int(line),news[0]['urlToImage'],"<pre>CNN</pre>\n" + "<b>"+news[0]['title']+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
+                                        self.send_photo(int(line),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+news[0]['title']+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                 except:
                                         print("Скорее всего файл ids.txt пустой")
         def send_meduza_news(self):
@@ -109,6 +113,8 @@ class BotHandler:
 mybot = BotHandler("749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ")
 meduza = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=0&per_page=24"
 cnn = "https://newsapi.org/v2/everything?sources=cnn&apiKey=e055568e37874d9d865d30630bb92d7e"
+bbc = "https://newsapi.org/v2/everything?sources=bbc-news&apiKey=e055568e37874d9d865d30630bb92d7e"
+lenta = "https://newsapi.org/v2/everything?sources=lenta&apiKey=e055568e37874d9d865d30630bb92d7e"
 class NewsThread(Thread):
         def __init__(self,name):
                 Thread.__init__(self)
@@ -119,7 +125,11 @@ class NewsThread(Thread):
                         #Meduza.io
                         mybot.send_meduza_news()
                         #CNN
-                        mybot.send_cnn_news()
+                        mybot.send_newsapi_news("CNN",cnn)
+                        #BBC
+                        mybot.send_newsapi_news("BBC",bbc)
+                        #Lenta
+                        mybot.send_newsapi_news("Lenta", lenta)
                         #print(news[z]['title'])
                         time.sleep(10)
 
