@@ -28,25 +28,25 @@ class BotHandler:
                 l = 0
                 for line in fci:
                         if(str(chat_id) != line[0:9]):
-				k+=1		
-			l+=1
-		if(k == l):
-			fci.close()
-			fci = open('ids.txt', 'a')
-			fci.write(str(chat_id) + '\n')
-			self.send_mess(chat_id, "Вы подписались на отправку новостей!")
-		else:
-			self.send_mess(chat_id,"Вы уже подписаны на новости")
+                                k+=1		
+                        l+=1
+                if(k == l):
+                        fci.close()
+                        fci = open('ids.txt', 'a')
+                        fci.write(str(chat_id) + '\n')
+                        self.send_mess(chat_id, "Вы подписались на отправку новостей!")
+                else:
+                        self.send_mess(chat_id,"Вы уже подписаны на новости")
 			
 		
-	def run_command(self,command,chat_id):
-		switch = {
-			"/help":self.cmd_help,
-			"/start":self.cmd_start,			
-		}		
+        def run_command(self,command,chat_id):
+                switch = {
+                        "/help":self.cmd_help,
+                        "/start":self.cmd_start,			
+                }		
 		#p = switch.get(command, lambda: send_mess(chat_id,"Не существует такой команды"))
-        	k=0
-		for st in switch:
+                k=0
+                for st in switch:
 			if(command == st):
 				switch[command](chat_id)	
 				break
