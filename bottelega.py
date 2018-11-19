@@ -87,7 +87,7 @@ class BotHandler:
                         #print(title)
                         for line in fci:
                                 try:
-                                        self.send_photo(int(line),news[0]['urlToImage'],"<pre>CNN</pre>\n" + "<b>"+news[0]['content']+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
+                                        self.send_photo(int(line),news[0]['urlToImage'],"<pre>CNN</pre>\n" + "<b>"+news[0]['title']+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                 except:
                                         print("Скорее всего файл ids.txt пустой")
         def send_meduza_news(self):
