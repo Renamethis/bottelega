@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # vim:fileencoding=utf-8
 from threading import Thread
-from googletrans import Translator
 import requests
 import datetime
 import time
