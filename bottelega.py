@@ -106,10 +106,6 @@ class BotHandler:
                                         except:
                                                 print("Скорее всего файл ids.txt пустой")
 
-translator = Translator(service_urls=[
-      'translate.google.com',
-      'translate.google.co.kr',
-    ])
 mybot = BotHandler("749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ")
 meduza = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=0&per_page=24"
 cnn = "https://newsapi.org/v2/everything?sources=cnn&apiKey=e055568e37874d9d865d30630bb92d7e"
