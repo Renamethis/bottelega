@@ -11,7 +11,7 @@ class BotHandler:
         def __init__(self,token):
                 self.token = token
                 self.api_url = "https://api.telegram.org/bot{}/".format(token)
-                self.meduza = 0
+                self.meduza = ' '
                 self.cnn = ' '
 
         def get_updates(self,offset=None,timeout=30):
@@ -97,8 +97,8 @@ class BotHandler:
                                 if(int(news[ko]['published_at']) > max):
                                         max = int(news[ko]['published_at'])
                                         z = ko
-                        if(self.meduza != max):
-                                self.meduza = max
+                        if(self.meduza != news[z]['title']):
+                                self.meduza = news[z]['title']
                                 fci = open('ids.txt', 'r')
                                 for line in fci:
                                         try:
