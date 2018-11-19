@@ -130,7 +130,7 @@ class NewsThread(Thread):
 
 def main():
         offset = None
-	nwthread = NewsThread("News")
+        nwthread = NewsThread("News")
         nwthread.start()
         while True:
                 mybot.get_updates(offset)
