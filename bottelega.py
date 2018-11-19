@@ -141,12 +141,10 @@ def main():
                         last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
-			print(type(last_chat_id))
-			print(last_chat_id)
-			if(last_text[0] == '/'):
-				mybot.run_command(last_text,last_chat_id)
-				offset = last_id+1
-				continue
+                        if(last_text[0] == '/'):
+                                mybot.run_command(last_text,last_chat_id)
+                                offset = last_id+1
+                                continue
                         if(6<=now.hour<12):
                                 mybot.send_mess(last_chat_id, 'Good Morning!')
                         elif(12<=now.hour<17):
