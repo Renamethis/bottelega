@@ -24,8 +24,8 @@ class BotHandler:
 	
         def cmd_start(self,chat_id):
                 fci = open('ids.txt', 'r')
-		k = 0
-		l = 0
+                k = 0
+                l = 0
 		for line in fci:
 			if(str(chat_id) != line[0:9]):
 				k+=1		
