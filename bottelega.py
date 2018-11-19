@@ -24,6 +24,10 @@ class BotHandler:
                 return response.json()['result']
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
+
+        def set_keyboard(self):
+                params = {'text': '/start'}
+                response = requests.get(self.api_url+'KeyboardButton',params)                       
 	
         def cmd_start(self,chat_id):
                 fci = open('ids.txt', 'r')
@@ -135,6 +139,7 @@ class NewsThread(Thread):
 
 def main():
         offset = None
+        mybot.set_keyboard()
         nwthread = NewsThread("News")
         nwthread.start()
         while True:
