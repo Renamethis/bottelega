@@ -19,8 +19,7 @@ class BotHandler:
                 params = {'timeout:': timeout, 'offset': offset}
                 response = requests.get(self.api_url+'getUpdates',params)
                 return response.json()['result']
-
-	def cmd_help(self,chat_id):
+        def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
 	
         def cmd_start(self,chat_id):
