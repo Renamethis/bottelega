@@ -108,6 +108,7 @@ class BotHandler:
                                 if(int(news[ko]['published_at']) > max):
                                         max = int(news[ko]['published_at'])
                                         z = ko
+                        print(max)
                         if(self.meduza != news[z]['url']):
                                 print(self.meduza + " " + news[z]['title'])
                                 self.meduza = news[z]['url']
