@@ -109,6 +109,7 @@ class BotHandler:
                                         max = int(news[ko]['published_at'])
                                         z = ko
                         if(self.meduza != news[z]['title']):
+                                print(self.meduza + " " + news[z]['title']
                                 self.meduza = news[z]['title']
                                 fci = open('ids.txt', 'r')
                                 for line in fci:
