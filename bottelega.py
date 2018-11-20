@@ -105,7 +105,7 @@ class BotHandler:
         def send_meduza_news(self):
                         rsp = requests.get(meduza)
                         news = rsp.json()['documents']
-                        z = None
+                        z = self.zk
                         for ko in news:
                                 if(int(news[ko]['published_at']) > self.max):
                                         self.max = int(news[ko]['published_at'])
