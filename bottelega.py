@@ -109,7 +109,7 @@ class BotHandler:
                                         max = int(news[ko]['published_at'])
                                         z = ko
                         if(self.meduza != news[z]['title']):
-                                print(self.meduza + " " + news[z]['title']
+                                print(self.meduza + " " + news[z]['title'])
                                 self.meduza = news[z]['title']
                                 fci = open('ids.txt', 'r')
                                 for line in fci:
@@ -153,7 +153,7 @@ def main():
                 if(last_update != -1):
                         last_id = last_update['update_id']
                         last_text = last_update['message']['text']
-                        last_name = last_update['message']['chat']['first_name']
+                        #last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
                         if(last_text[0] == '/'):
