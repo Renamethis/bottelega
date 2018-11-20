@@ -105,17 +105,18 @@ class BotHandler:
                         max = -1
                         z = None
                         for ko in news:
-                                if(int(news[ko]['modified_at']) > max):
-                                        max = int(news[ko]['modified_at'])
+                                if(int(news[ko]['published_at']) > max):
+                                        max = int(news[ko]['published_at'])
                                         z = ko
                         if(self.meduza != news[z]['title']):
                                 self.meduza = news[z]['title']
                                 fci = open('ids.txt', 'r')
                                 for line in fci:
                                         try:
-                                                self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
+                                                self.send_photo(int(line),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
+                                                #self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
                                         except:
-                                                print("Скорее всего файл ids.txt пустой")
+                                                self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
 
 mybot = BotHandler("749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ")
 meduza = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=0&per_page=24"
