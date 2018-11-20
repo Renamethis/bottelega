@@ -115,7 +115,8 @@ class BotHandler:
                                 if(self.meduza != news[z]['url']):
                                         #print(self.meduza + " " + news[z]['title'])
                                         self.meduza = news[z]['url']
-                                        fci = open('ids.txt', 'r')                                self.zk = z
+                                        fci = open('ids.txt', 'r')
+                                        self.zk = z
                                         self.chi+=1
                                         if(self.chi > 20):
                                                 self.chi = 0
