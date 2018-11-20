@@ -18,6 +18,7 @@ class BotHandler:
                         'BBC':' ',
                         'Lenta':' '
                         }
+                self.zk = []
 
         def get_updates(self,offset=None,timeout=30):
                 params = {'timeout:': timeout, 'offset': offset}
@@ -102,7 +103,7 @@ class BotHandler:
         def send_meduza_news(self):
                         rsp = requests.get(meduza)
                         news = rsp.json()['documents']
-                        max = -1
+                        max1 = -1
                         z = None
                         for ko in news:
                                 if(int(news[ko]['published_at']) > max):
@@ -113,6 +114,8 @@ class BotHandler:
                                 print(self.meduza + " " + news[z]['title'])
                                 self.meduza = news[z]['url']
                                 fci = open('ids.txt', 'r')
+                                print(news[zk]['published_at']
+                                self.zk = z
                                 for line in fci:
                                         try:
                                                 self.send_photo(int(line),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
@@ -141,7 +144,7 @@ class NewsThread(Thread):
                         #Lenta
                         mybot.send_newsapi_news("Lenta", lenta)
                         #print(news[z]['title'])
-                        time.sleep(10)
+                        time.sleep(15)
 
 def main():
         offset = None
