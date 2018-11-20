@@ -19,7 +19,9 @@ class BotHandler:
                         'Lenta':' '
                         }
                 self.zk = []
-
+                self.max = 0
+                self.chi = 0
+                
         def get_updates(self,offset=None,timeout=30):
                 params = {'timeout:': timeout, 'offset': offset}
                 response = requests.get(self.api_url+'getUpdates',params)
@@ -103,13 +105,12 @@ class BotHandler:
         def send_meduza_news(self):
                         rsp = requests.get(meduza)
                         news = rsp.json()['documents']
-                        max1 = -1
                         z = None
                         for ko in news:
-                                if(int(news[ko]['published_at']) > max1):
-                                        max1 = int(news[ko]['published_at'])
+                                if(int(news[ko]['published_at']) > self.max):
+                                        self.max = int(news[ko]['published_at'])
                                         z = ko
-                        print(max1)
+                        print(self.max)
                         if(self.meduza != news[z]['url']):
                                 #print(self.meduza + " " + news[z]['title'])
                                 self.meduza = news[z]['url']
@@ -119,6 +120,9 @@ class BotHandler:
                                 except:
                                         print("hi")
                                 self.zk = z
+                                self.chi+=1
+                                if(self.chi > 20):
+                                        self.chi = 0
                                 for line in fci:
                                         try:
                                                 self.send_photo(int(line),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
