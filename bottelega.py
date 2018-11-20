@@ -111,10 +111,13 @@ class BotHandler:
                                         z = ko
                         print(max1)
                         if(self.meduza != news[z]['url']):
-                                print(self.meduza + " " + news[z]['title'])
+                                #print(self.meduza + " " + news[z]['title'])
                                 self.meduza = news[z]['url']
                                 fci = open('ids.txt', 'r')
-                                print(news[self.zk]['published_at'])
+                                try:
+                                        print(news[self.zk]['published_at'])
+                                except:
+                                        print("hi")
                                 self.zk = z
                                 for line in fci:
                                         try:
