@@ -5,6 +5,7 @@ from threading import Thread
 import requests
 import datetime
 import time
+from googleapiclient.discovery import build
 url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ/"
 helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
 class BotHandler:
@@ -83,17 +84,19 @@ class BotHandler:
                 return response
         
         def send_newsapi_news(self,new,url):
+                service = build('translate', 'v2',developerKey='AIzaSyAWYU-85WXnlOTy1CdRH6CbRRb7wp57ImE')
                 rsp = requests.get(url)
                 news = rsp.json()['articles']
                 z = news[0]['publishedAt']
                 if(z!=self.newsapi[new]):
+                        title = service.translations().list(target='ru',q=[news[0]['title']]).execute()['translations'][0]['translatedText']
                         self.newsapi[new] = z
                         fci = open('ids.txt', 'r')
                         #title = translator.translate({news[0]['content']},dest='ru')
                         #print(title)
                         for line in fci:
                                 try:
-                                        self.send_photo(int(line),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+news[0]['title']+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
+                                        self.send_photo(int(line),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                 except:
                                         print("Скорее всего файл ids.txt пустой")
         def send_meduza_news(self):
@@ -102,8 +105,8 @@ class BotHandler:
                         max = -1
                         z = None
                         for ko in news:
-                                if(int(news[ko]['published_at']) > max):
-                                        max = int(news[ko]['published_at'])
+                                if(int(news[ko]['modified_at']) > max):
+                                        max = int(news[ko]['modified_at'])
                                         z = ko
                         if(self.meduza != news[z]['title']):
                                 self.meduza = news[z]['title']
