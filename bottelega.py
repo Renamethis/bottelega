@@ -114,7 +114,7 @@ class BotHandler:
                                 print(self.meduza + " " + news[z]['title'])
                                 self.meduza = news[z]['url']
                                 fci = open('ids.txt', 'r')
-                                print(news[zk]['published_at']
+                                print(news[zk]['published_at'])
                                 self.zk = z
                                 for line in fci:
                                         try:
