@@ -21,6 +21,10 @@ class BotHandler:
                 self.zk = []
                 self.max = 0
                 self.chi = 0
+                try:
+                        self.service = build('translate', 'v2',developerKey='AIzaSyAWYU-85WXnlOTy1CdRH6CbRRb7wp57ImE')
+                except:
+                        print('Шота с инициализацией переводчика')
                 
         def get_updates(self,offset=None,timeout=30):
                 params = {'timeout:': timeout, 'offset': offset}
@@ -87,12 +91,15 @@ class BotHandler:
                 return response
         
         def send_newsapi_news(self,new,url):
-                service = build('translate', 'v2',developerKey='AIzaSyAWYU-85WXnlOTy1CdRH6CbRRb7wp57ImE')
                 rsp = requests.get(url)
                 news = rsp.json()['articles']
                 z = news[0]['publishedAt']
                 if(z!=self.newsapi[new]):
-                        title = service.translations().list(target='ru',q=[news[0]['title']]).execute()['translations'][0]['translatedText']
+                        try:
+                                title = self.service.translations().list(target='ru',q=[news[0]['title']]).execute()['translations'][0]['translatedText']
+                        except:
+                                title = news[0]['title']
+                                print('Что то с переводчиком')
                         self.newsapi[new] = z
                         fci = open('ids.txt', 'r')
                         #title = translator.translate({news[0]['content']},dest='ru')
