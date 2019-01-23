@@ -184,7 +184,7 @@ def main():
                         elif(17<=now.hour<23):
                                 mybot.send_mess(last_chat_id, 'Good evening!')
                         else:
-                                mybot.send_mess(last_chat_id, 'Why you,fucken bitch dont sleep?!')
+                                mybot.send_mess(last_chat_id, 'Good night!')
                         offset = last_id+1                       
 
 if __name__ == '__main__':  
