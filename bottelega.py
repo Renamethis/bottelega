@@ -15,8 +15,8 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = conn.cursor()
 cursor.execute('CREATE TABLE users(user_id SERIAL PRIMARY KEY, subs INTEGER NOT NULL)')
-records = cursor.fetchall()
-print(records)
+#records = cursor.fetchall()
+#print(records)
 cursor.close()
 conn.close()
 class BotHandler:
