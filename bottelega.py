@@ -10,7 +10,6 @@ import os
 import psycopg2
 url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ/"
 helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
-print(os.environ)
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = conn.cursor()
@@ -56,7 +55,7 @@ class BotHandler:
                 if(k == l):
                         fci.close()
                         fci = open('ids.txt', 'a')
-                        cursor.execute("INSERT INTO users values(5,'all');")
+                        print(cursor.execute("INSERT INTO users values(5,'all');"))
                             #records = cursor.fetchall()
                         #print(records)
                         fci.write(str(chat_id) + '\n')
