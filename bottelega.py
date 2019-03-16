@@ -10,6 +10,7 @@ import dj_database_url
 url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ/"
 helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
 DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+print(DATABASES['default'])
 class BotHandler:
         def __init__(self,token):
                 self.token = token
