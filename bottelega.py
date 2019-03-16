@@ -14,7 +14,7 @@ print(os.environ)
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = conn.cursor()
-cursor.execute('INSERT INTO postgresql-objective-52700 values("1","1")')
+cursor.execute('INSERT INTO d4ohlg0nj9tboj("sshonjkxrqpmag","a05d543c039bc30556d03bcb5b60fc50caf7ab7545bd1fb056b0e5c6a74a9e95") values("1","1")')
 records = cursor.fetchall()
 print(records)
 cursor.close()
