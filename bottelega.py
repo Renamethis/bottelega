@@ -6,10 +6,12 @@ import requests
 import datetime
 import time
 from googleapiclient.discovery import build
-import dj_database_url
+import os
+import psycopg2
 url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ/"
 helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 print(DATABASES['default'])
 class BotHandler:
         def __init__(self,token):
