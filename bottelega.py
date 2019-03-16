@@ -12,7 +12,13 @@ url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ
 helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
 print(os.environ)
 DATABASE_URL = os.environ['DATABASE_URL']
-#conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+cursor = conn.cursor()
+cursor.execute('INSERT INTO postgresql-objective-52700 values("1","1")')
+records = cursor.fetchall()
+print(records)
+cursor.close()
+conn.close()
 class BotHandler:
         def __init__(self,token):
                 self.token = token
