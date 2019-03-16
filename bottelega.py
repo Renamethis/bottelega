@@ -56,7 +56,7 @@ class BotHandler:
                 if(k == l):
                         fci.close()
                         fci = open('ids.txt', 'a')
-                        cursor.execute('INSERT INTO users values(' + str(chat_id) + ', "all")')
+                        cursor.execute("INSERT INTO users values(' + str(chat_id) + ', 'all')")
                         fci.write(str(chat_id) + '\n')
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
                 else:
