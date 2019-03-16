@@ -10,7 +10,7 @@ import os
 import psycopg2
 url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ/"
 helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
-DATABASE_URL = os.environ['postgresql://localhost/d4ohlg0nj9tboj']
+DATABASE_URL = os.environ['postgresql://postgresql-objective-52700']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 class BotHandler:
         def __init__(self,token):
