@@ -178,13 +178,13 @@ def main():
                                 offset = last_id+1
                                 continue
                         if(6<=now.hour<12):
-                                mybot.send_mess(last_chat_id, 'Good Morning!')
+                                mybot.send_mess(last_chat_id, 'Good Morning!1')
                         elif(12<=now.hour<17):
-                                mybot.send_mess(last_chat_id, 'Good Day!')
+                                mybot.send_mess(last_chat_id, 'Good Day!1')
                         elif(17<=now.hour<23):
-                                mybot.send_mess(last_chat_id, 'Good evening!')
+                                mybot.send_mess(last_chat_id, 'Good evening!1')
                         else:
-                                mybot.send_mess(last_chat_id, 'Good night!')
+                                mybot.send_mess(last_chat_id, 'Good night!1')
                         offset = last_id+1                       
 
 if __name__ == '__main__':  
