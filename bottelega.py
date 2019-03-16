@@ -14,11 +14,8 @@ print(os.environ)
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = conn.cursor()
-cursor.execute('CREATE TABLE users(user_id SERIAL PRIMARY KEY, subs INTEGER NOT NULL)')
 #records = cursor.fetchall()
 #print(records)
-cursor.close()
-conn.close()
 class BotHandler:
         def __init__(self,token):
                 self.token = token
@@ -59,6 +56,7 @@ class BotHandler:
                 if(k == l):
                         fci.close()
                         fci = open('ids.txt', 'a')
+                        cursor.execute('INSERT INTO users values(' + chat_id + ', 1)')
                         fci.write(str(chat_id) + '\n')
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
                 else:
@@ -196,7 +194,8 @@ def main():
                                 mybot.send_mess(last_chat_id, 'Good evening!1')
                         else:
                                 mybot.send_mess(last_chat_id, 'Good night!1')
-                        offset = last_id+1                       
-
+                        offset = last_id+1
+        cursor.close()
+        conn.close()
 if __name__ == '__main__':  
 	main()
