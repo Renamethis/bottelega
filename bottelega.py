@@ -55,7 +55,7 @@ class BotHandler:
                 if(k == l):
                         fci.close()
                         fci = open('ids.txt', 'a')
-                        print(cursor.execute("INSERT INTO users values(5,'all');"))
+                        print(cursor.execute("INSERT INTO users values(5,'all')"))
                             #records = cursor.fetchall()
                         #print(records)
                         fci.write(str(chat_id) + '\n')
