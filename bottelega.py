@@ -58,7 +58,7 @@ class BotHandler:
                         try:
                                 records = cursor.fetchall()
                                 print(records)
-                        catch Exception:
+                        except Exception:
                                 print("No results")
  #                       insert = sql.SQL('INSERT INTO users (user_id, subs) VALUES ()').format(sql.SQL(',').join(map(sql.Literal, (int(chat_id),'all'))))
  #                       cursor.execute(insert)
