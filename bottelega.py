@@ -13,12 +13,12 @@ url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ
 helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+conn.autocommit = True
 cursor = conn.cursor()
 #records = cursor.fetchall()
 #print(records)
 cursor.execute("SELECT * FROM users")
 records = cursor.fetchall()
-conn.autocommit = True
 print(records)
 class BotHandler:
         def __init__(self,token):
@@ -58,7 +58,7 @@ class BotHandler:
                         try:
                                 records = cursor.fetchall()
                                 print(records)
-                        except Exception:
+                        except:
                                 print("No results")
  #                       insert = sql.SQL('INSERT INTO users (user_id, subs) VALUES ()').format(sql.SQL(',').join(map(sql.Literal, (int(chat_id),'all'))))
  #                       cursor.execute(insert)
