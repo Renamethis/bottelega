@@ -118,6 +118,7 @@ class BotHandler:
                         records = cursor.fetchall()
                         for line in records:
                                 try:
+                                        print(line[0])
                                         self.send_photo(int(line[0]),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                 except:
                                         print("Скорее всего БД пуста")
