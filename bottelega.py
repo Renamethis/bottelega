@@ -18,6 +18,7 @@ cursor = conn.cursor()
 #print(records)
 cursor.execute("SELECT * FROM users")
 records = cursor.fetchall()
+conn.autocommit = True
 print(records)
 class BotHandler:
         def __init__(self,token):
@@ -53,9 +54,12 @@ class BotHandler:
                 records = cursor.fetchall()
                # print(records)
                 if(not records):
-                        cursor.execute("INSERT INTO users(user_id, subs) VALUES(%s,%s);",(str(chat_id),'all'))
-                        records = cursor.fetchall()
-                        print(records)
+                        cursor.execute("INSERT INTO users(user_id, subs) VALUES(%s,%s)",(chat_id,'all'))
+                        try:
+                                records = cursor.fetchall()
+                                print(records)
+                        catch Exception:
+                                print("No results")
  #                       insert = sql.SQL('INSERT INTO users (user_id, subs) VALUES ()').format(sql.SQL(',').join(map(sql.Literal, (int(chat_id),'all'))))
  #                       cursor.execute(insert)
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
