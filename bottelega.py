@@ -93,6 +93,11 @@ class BotHandler:
         def error(code,error):
                 return "ERROR: " + code + " : " + error
         
+        def send_inline_key(self, chat, text):
+                params = {'keyboard':[[{'text':text,'text':text}]]}
+                response = requests.post(self.api_url + 'sendMessage', params)
+                return response
+        
         def send_mess(self,chat,text):
                 params = {'chat_id':chat, 'text':text, 'parse_mode':'HTML'}
                 response = requests.post(self.api_url + 'sendMessage', params)
@@ -118,7 +123,6 @@ class BotHandler:
                         records = cursor.fetchall()
                         for line in records:
                                 try:
-                                        print(line[0])
                                         self.send_photo(int(line[0]),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                 except:
                                         print("Скорее всего БД пуста")
@@ -186,6 +190,7 @@ def main():
                         #last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
+                        mybot.send_inline_key(last_chat_id, "test")
                         if(last_text[0] == '/'):
                                 mybot.run_command(last_text,last_chat_id)
                                 offset = last_id+1
