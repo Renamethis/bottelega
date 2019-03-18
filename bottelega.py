@@ -16,6 +16,9 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = conn.cursor()
 #records = cursor.fetchall()
 #print(records)
+cursor.execute("SELECT * FROM users")
+records = cursor.fetchall()
+print(records)
 class BotHandler:
         def __init__(self,token):
                 self.token = token
