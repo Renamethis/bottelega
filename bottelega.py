@@ -60,7 +60,7 @@ class BotHandler:
                             #records = cursor.fetchall()
                         #print(records)
                         conn.autocommit = True
-                        cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (user_id, "all"))
+                        cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (chat_id, "all"))
                         fci.write(str(chat_id) + '\n')
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
                 else:
