@@ -49,9 +49,9 @@ class BotHandler:
                 response = requests.get(self.api_url+'KeyboardButton',params)                       
 	
         def cmd_start(self,chat_id):
-                fci = open('ids.txt', 'r')
-                k = 0
-                l = 0
+ #               fci = open('ids.txt', 'r')
+ #               k = 0
+ #               l = 0
                 cursor.execute("SELECT * FROM users WHERE user_id = %s", (str(chat_id), ))
                 records = cursor.fetchall()
                 print(records)
@@ -59,7 +59,7 @@ class BotHandler:
                         if(str(chat_id) != line[0:9]):
                                 k+=1		
                         l+=1
-                if(records):
+                if(not records):
                         fci.close()
                         fci = open('ids.txt', 'a')
                         cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (chat_id, "all"))
