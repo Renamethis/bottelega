@@ -53,7 +53,7 @@ class BotHandler:
                 cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                 records = cursor.fetchall()
                # print(records)
-                if(not records):
+                if(records):
                         cursor.execute("INSERT INTO users(user_id, subs) VALUES(%s,%s)",(chat_id,'all'))
                         try:
                                 records = cursor.fetchall()
