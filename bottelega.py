@@ -59,7 +59,6 @@ class BotHandler:
                         cursor.execute("SELECT * FROM users WHERE user_id = %s", (str(chat_id), ))
                         records = cursor.fetchall()
                         print(records)
-                        conn.autocommit = True
                         cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (chat_id, "all"))
                         fci.write(str(chat_id) + '\n')
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
