@@ -56,7 +56,7 @@ class BotHandler:
                 if(k == l):
                         fci.close()
                         fci = open('ids.txt', 'a')
-                        cursor.execute("SELECT * FROM users")
+                        cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id))
                         records = cursor.fetchall()
                         print(records)
                         conn.autocommit = True
