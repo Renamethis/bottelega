@@ -53,9 +53,9 @@ class BotHandler:
                 records = cursor.fetchall()
                # print(records)
                 if(not records):
- #                       cursor.execute("INSERT INTO users(user_id, subs) VALUES(%s,%s)",(chat_id,'all'))
-                        insert = sql.SQL('INSERT INTO users (user_id, subs) VALUES ()').format(sql.SQL(',').join(map(sql.Literal, (int(chat_id),'all'))))
-                        cursor.execute(insert)
+                        cursor.execute("INSERT INTO users(user_id, subs) VALUES(%s,%s);",(chat_id,'all'))
+ #                       insert = sql.SQL('INSERT INTO users (user_id, subs) VALUES ()').format(sql.SQL(',').join(map(sql.Literal, (int(chat_id),'all'))))
+ #                       cursor.execute(insert)
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
                 else:
                         self.send_mess(chat_id,"Вы уже подписаны на новости")
