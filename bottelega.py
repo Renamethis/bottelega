@@ -94,7 +94,7 @@ class BotHandler:
                 return "ERROR: " + code + " : " + error
         
         def send_inline_key(self, chat, text):
-                params = {"text":text, "chat_id":chat, "reply_markup": {"inline_keyboard":[{"text":text, "callback_data":"click_data"}]}}
+                params = {"text":text, "chat_id":chat} #"reply_markup": {"inline_keyboard":[{"text":text, "callback_data":"click_data"}]}}
                 response = requests.post(self.api_url + 'sendMessage', params)
                 return response
         
