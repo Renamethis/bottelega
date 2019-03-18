@@ -49,11 +49,11 @@ class BotHandler:
                 response = requests.get(self.api_url+'KeyboardButton',params)                       
 	
         def cmd_start(self,chat_id):
-                cursor.execute("SELECT * FROM users WHERE user_id = %s", (str(chat_id), ))
+                cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                 records = cursor.fetchall()
                # print(records)
                 if(not records):
-                        cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (str(chat_id), "all"))
+                        cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (chat_id, "all"))
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
                 else:
                         self.send_mess(chat_id,"Вы уже подписаны на новости")
