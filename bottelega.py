@@ -49,6 +49,9 @@ class BotHandler:
                 fci = open('ids.txt', 'r')
                 k = 0
                 l = 0
+                cursor.execute("SELECT * FROM users WHERE user_id = %s", (str(chat_id), ))
+                records = cursor.fetchall()
+                print(records)
                 for line in fci:
                         if(str(chat_id) != line[0:9]):
                                 k+=1		
@@ -56,9 +59,6 @@ class BotHandler:
                 if(k == l):
                         fci.close()
                         fci = open('ids.txt', 'a')
-                        cursor.execute("SELECT * FROM users WHERE user_id = %s", (str(chat_id), ))
-                        records = cursor.fetchall()
-                        print(records)
                         cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (chat_id, "all"))
                         fci.write(str(chat_id) + '\n')
                         self.send_mess(chat_id, "Вы подписались на отправку новостей!")
