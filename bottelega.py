@@ -59,7 +59,7 @@ class BotHandler:
                         if(str(chat_id) != line[0:9]):
                                 k+=1		
                         l+=1
-                if(records != []):
+                if(records):
                         fci.close()
                         fci = open('ids.txt', 'a')
                         cursor.execute("INSERT INTO users (user_id, subs) VALUES (%s, %s)", (chat_id, "all"))
