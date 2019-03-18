@@ -106,14 +106,13 @@ class BotHandler:
                                 title = news[0]['title']
                                 print('Что то с переводчиком')
                         self.newsapi[new] = z
-                        fci = open('ids.txt', 'r')
-                        #title = translator.translate({news[0]['content']},dest='ru')
-                        #print(title)
-                        for line in fci:
+                        cursor.execute("SELECT * FROM users")
+                        records = cursor.fetchall()
+                        for line in records:
                                 try:
-                                        self.send_photo(int(line),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
+                                        self.send_photo(int(line[0]),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                 except:
-                                        print("Скорее всего файл ids.txt пустой")
+                                        print("Скорее всего БД пуста")
         def send_meduza_news(self):
                         rsp = requests.get(meduza)
                         news = rsp.json()['documents']
