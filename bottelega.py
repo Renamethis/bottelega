@@ -33,7 +33,7 @@ class BotHandler:
                         'Lenta':' '
                         }
                 self.zk = []
-                self.list = ""
+                self.dict = {}
                 self.max = 0
                 self.chi = 0
                 try:
@@ -53,10 +53,9 @@ class BotHandler:
                 cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                 records = cursor.fetchall()
                 if(records):
-                        issid = chat_id
                         buttons = [[{'text':"CNN", 'callback_data':0}, {'text':"BBC", "callback_data":1}, {'text':"Lenta",'callback_data':2}, {'text':"Meduza", 'callback_data':3}], [{'text':'Set up','callback_data':chat_id}]]
+                        self.dict[chat_id] = ""
                         self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
-                        issetting = True
                 else:
                         self.send_mess(chat_id,"Для настройки бота подпишитесь на рассылку!")
         def cmd_help(self,chat_id):
@@ -226,17 +225,18 @@ def main():
                                         mybot.send_mess(last_chat_id, 'Good night!1')
                                 offset = last_id+1
                         except:
-                                
-                                if(mybot.issid != -1):
+                                print(last_update)
+                                chat_id = 0
+                                if(chat_id in mybot.dict):
                                         cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                                         records = cursor.fetchall()
+                                        if(strs == 'all'):
+                                                strs = ""
                                         if(last_update['callback_query']['data'].isdigit()):
-                                                if(records[1].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
-                                                        mybot.list+=nwarray[int(last_update['callback_query']['data'])]
+                                                if(mybot.dict[chat_id].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
+                                                        strs+=nwarray[int(last_update['callback_query']['data'])]
                                         else:
-                                                print(mybot.list)
-                                                mybot.list = ""
-                                                mybot.issid = -1
+                                                del(mybot.dict[chat_id])
                                         
                         upk = last_update
         cursor.close()
