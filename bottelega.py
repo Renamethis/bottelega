@@ -226,16 +226,17 @@ def main():
                                 offset = last_id+1
                         except:
                                 print(last_update)
-                                chat_id = 0
+                                chat_id = last_update['callback_query']['from']['id']
                                 if(chat_id in mybot.dict):
                                         cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                                         records = cursor.fetchall()
-                                        if(strs == 'all'):
-                                                strs = ""
-                                        if(last_update['callback_query']['data'].isdigit()):
+                                        if(mybot.dict[chat_id] == 'all'):
+                                                mybot.dict[chat_id] = ""                                               
+                                        if(last_update['callback_query']['data'] != chat_id):
                                                 if(mybot.dict[chat_id].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
-                                                        strs+=nwarray[int(last_update['callback_query']['data'])]
+                                                        mybot.dict[chat_id]+=nwarray[int(last_update['callback_query']['data'])]
                                         else:
+                                                print(mybot.dict)
                                                 del(mybot.dict[chat_id])
                                         
                         upk = last_update
