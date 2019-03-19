@@ -94,7 +94,7 @@ class BotHandler:
                 return "ERROR: " + code + " : " + error
         
         def send_inline_key(self, chat, text):
-                params = {"text":text, "chat_id":chat, 'reply_markup':[[{'text':text, 'callback_data':'Privet!'}]]} 
+                params = {"text":text, "chat_id":chat, 'reply_markup':{'inline_keyboard':[[{'text':text, 'callback_data':'Privet!'}]]}} 
                 response = requests.post(self.api_url + 'sendMEssage', params)
                 return response
         
@@ -139,14 +139,12 @@ class BotHandler:
                                 if(self.meduza != news[z]['url']):
                                         #print(self.meduza + " " + news[z]['title'])
                                         self.meduza = news[z]['url']
-                                        fci = open('ids.txt', 'r')
                                         self.zk = z
-                                        self.chi+=1
-                                        if(self.chi > 20):
-                                                self.chi = 0
-                                        for line in fci:
+                                        cursor.execute("SELECT * FROM users")
+                                        records = cursor.fetchall()
+                                        for line in records:
                                                 try:
-                                                        self.send_photo(int(line),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
+                                                        self.send_photo(int(line[0]),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
                                                         #self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
                                                 except:
                                                         self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
