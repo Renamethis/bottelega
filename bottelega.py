@@ -95,7 +95,7 @@ class BotHandler:
                 return "ERROR: " + code + " : " + error
         
         def send_inline_key(self, chat, text):
-                button = [{'text':text, 'callback_data':'Hi'}]
+                button = [{'text':text, 'callback_data':'Hi'}, {'text':text, 'url':'google.com'}]
                 key = [button]
                 inkey = {"inline_keyboard":key}
                 rpmark = json.dumps(inkey)
