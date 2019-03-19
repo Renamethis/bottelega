@@ -193,6 +193,7 @@ def main():
         while True:
                 mybot.get_updates(offset)
                 last_update = mybot.last_update()
+                print(last_update)
                 if(last_update != -1):
                         last_id = last_update['update_id']
                         last_text = last_update['message']['text']
