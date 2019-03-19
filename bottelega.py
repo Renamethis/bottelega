@@ -5,6 +5,7 @@ from threading import Thread
 import requests
 import datetime
 import time
+import json
 from googleapiclient.discovery import build
 import os
 import psycopg2
@@ -94,7 +95,11 @@ class BotHandler:
                 return "ERROR: " + code + " : " + error
         
         def send_inline_key(self, chat, text):
-                params = {"text":text, "chat_id":chat, 'reply_markup':{'inline_keyboard':[[{'text':text, 'switch_inline_query':'share'}]]}} 
+                button = [{'text':text, 'callback_data':'Hi'}]
+                key = [button]
+                inkey = ["inline_keyboard":key]
+                rpmark = json.dumps(inkey, True)
+                params = {"text":text, "chat_id":chat, 'reply_markup':rpmark} 
                 response = requests.post(self.api_url + 'sendMEssage', params)
                 return response
         
