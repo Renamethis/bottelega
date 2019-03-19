@@ -24,6 +24,7 @@ print(records)
 class BotHandler:
         def __init__(self,token):
                 self.token = token
+                self.issid = -1
                 self.api_url = "https://api.telegram.org/bot{}/".format(token)
                 self.meduza = ' '
                 self.newsapi = {
@@ -32,6 +33,7 @@ class BotHandler:
                         'Lenta':' '
                         }
                 self.zk = []
+                self.list = ""
                 self.max = 0
                 self.chi = 0
                 try:
@@ -48,8 +50,15 @@ class BotHandler:
                         return None
 
         def cmd_settings(self, chat_id):
-                buttons = [[{'text':"CNN", 'callback_data':0}, {'text':"BBC", "callback_data":1}, {'text':"Lenta",'callback_data':2}, {'text':"Meduza", 'callback_data':3}], [{'text':'Set up','callback_data':chat_id}]]
-                self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
+                cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
+                records = cursor.fetchall()
+                if(records):
+                        issid = chat_id
+                        buttons = [[{'text':"CNN", 'callback_data':0}, {'text':"BBC", "callback_data":1}, {'text':"Lenta",'callback_data':2}, {'text':"Meduza", 'callback_data':3}], [{'text':'Set up','callback_data':chat_id}]]
+                        self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
+                        issetting = True
+                else:
+                        self.send_mess(chat_id,"Для настройки бота подпишитесь на рассылку!")
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
 
@@ -167,6 +176,7 @@ meduza = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=0&per_page=
 cnn = "https://newsapi.org/v2/everything?sources=cnn&apiKey=e055568e37874d9d865d30630bb92d7e"
 bbc = "https://newsapi.org/v2/everything?sources=bbc-news&apiKey=e055568e37874d9d865d30630bb92d7e"
 lenta = "https://newsapi.org/v2/everything?sources=lenta&apiKey=e055568e37874d9d865d30630bb92d7e"
+nwarray = ['CNN', 'BBC', 'Lenta', 'Meduza']
 class NewsThread(Thread):
         def __init__(self,name):
                 Thread.__init__(self)
@@ -216,7 +226,18 @@ def main():
                                         mybot.send_mess(last_chat_id, 'Good night!1')
                                 offset = last_id+1
                         except:
-                                print(last_update['callback_query']['data'])
+                                
+                                if(mybot.issid != -1):
+                                        cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
+                                        records = cursor.fetchall()
+                                        if(last_update['callback_query']['data'].isdigit()):
+                                                if(records[1].find(nwarray[int(last_update['callback_query']['data'])] == -1):
+                                                        mybot.list+=nwarray[int(last_update['callback_query']['data'])]
+                                        else:
+                                                print(mybot.list)
+                                                mybot.list = ""
+                                                mybot.issid = -1
+                                        
                         upk = last_update
         cursor.close()
         conn.close()
