@@ -94,9 +94,7 @@ class BotHandler:
         def error(code,error):
                 return "ERROR: " + code + " : " + error
         
-        def send_inline_key(self, chat, text):
-                button = [{'text':text, 'callback_data':'Hi'}, {'text':text, 'url':'google.com'}]
-                key = [button]
+        def send_inline_key(self, chat, text,buttons):
                 inkey = {"inline_keyboard":key}
                 rpmark = json.dumps(inkey)
                 params = {"text":text, "chat_id":chat, 'reply_markup':rpmark} 
@@ -193,7 +191,7 @@ def main():
                         #last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
-                        mybot.send_inline_key(last_chat_id, "test")
+                        print(mybot.send_inline_key(last_chat_id, "", [[{text:"CNN"}, {text:"BBC", "callback_data":'1'}, {text:"Lenta"}, {text:"Meduza"}))
                         if(last_text[0] == '/'):
                                 mybot.run_command(last_text,last_chat_id)
                                 offset = last_id+1
