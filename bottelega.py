@@ -186,6 +186,7 @@ class NewsThread(Thread):
                         time.sleep(15)
 
 def main():
+        upk = []
         offset = None
         mybot.set_keyboard()
         nwthread = NewsThread("News")
@@ -194,7 +195,7 @@ def main():
                 mybot.get_updates(offset)
                 last_update = mybot.last_update()
                 print(last_update)
-                if(last_update != -1):
+                if(last_update != -1 && last_update != upk):
                         try:
                                 last_id = last_update['update_id']
                                 last_text = last_update['message']['text']
@@ -216,6 +217,7 @@ def main():
                                 offset = last_id+1
                         except:
                                 print(last_update['callback_query']['data'])
+                        upk = last_update
         cursor.close()
         conn.close()
 if __name__ == '__main__':  
