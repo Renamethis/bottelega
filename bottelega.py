@@ -40,9 +40,12 @@ class BotHandler:
                         print('Шота с инициализацией переводчика')
                 
         def get_updates(self,offset=None,timeout=30):
-                params = {'timeout:': timeout, 'offset': offset}
-                response = requests.get(self.api_url+'getUpdates',params)
-                return response.json()['result']
+                try:
+                        params = {'timeout:': timeout, 'offset': offset}
+                        response = requests.get(self.api_url+'getUpdates',params)
+                        return response.json()['result']
+                except:
+                        return None
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
 
@@ -95,6 +98,7 @@ class BotHandler:
                 return "ERROR: " + code + " : " + error
         
         def send_inline_key(self, chat, text, buttons):
+                buttons = [{'text':'CNN', 'callback_data':'Hi'}]
                 key = [buttons]
                 inkey = {"inline_keyboard":key}
                 rpmark = json.dumps(inkey)
