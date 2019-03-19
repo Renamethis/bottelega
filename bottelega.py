@@ -231,7 +231,7 @@ def main():
                                         cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                                         records = cursor.fetchall()
                                         if(last_update['callback_query']['data'].isdigit()):
-                                                if(records[1].find(nwarray[int(last_update['callback_query']['data'])] == -1):
+                                                if(records[1].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
                                                         mybot.list+=nwarray[int(last_update['callback_query']['data'])]
                                         else:
                                                 print(mybot.list)
