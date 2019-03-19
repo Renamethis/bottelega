@@ -11,7 +11,7 @@ import os
 import psycopg2
 from psycopg2 import sql
 url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ/"
-helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей"
+helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей\n/settings - настроить бота"
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 conn.autocommit = True
@@ -46,6 +46,10 @@ class BotHandler:
                         return response.json()['result']
                 except:
                         return None
+
+        def cmd_settings(self, chat_id):
+                buttons = [[{'text':"CNN", 'callback_data':'0'}, {'text':"BBC", "callback_data":'1'}, {'text':"Lenta",'callback_data':'2'}, {'text':"Meduza", 'callback_data':'3'}]]
+                self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
 
@@ -74,7 +78,8 @@ class BotHandler:
         def run_command(self,command,chat_id):
                 switch = {
                         "/help":self.cmd_help,
-                        "/start":self.cmd_start,			
+                        "/start":self.cmd_start,
+                        "/settings":self.cmd_settings
                 }		
 		#p = switch.get(command, lambda: send_mess(chat_id,"Не существует такой команды"))
                 k=0
@@ -194,7 +199,6 @@ def main():
                         #last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
-                        print(mybot.send_inline_key(last_chat_id, "Hey", [[{'text':"CNN", 'callback_data':'0'}, {'text':"BBC", "callback_data":'1'}, {'text':"Lenta",'callback_data':'2'}, {'text':"Meduza", 'callback_data':'3'}]]))
                         if(last_text[0] == '/'):
                                 mybot.run_command(last_text,last_chat_id)
                                 offset = last_id+1
