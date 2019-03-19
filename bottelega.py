@@ -230,7 +230,7 @@ def main():
                                 if(chat_id in mybot.dict):
                                         cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                                         records = cursor.fetchall()
-                                        print(last_update['callback_query']['data'])
+                                        print(type(last_update['callback_query']['data']))
                                         if(last_update['callback_query']['data'] != chat_id):
                                                 if(mybot.dict[chat_id].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
                                                         mybot.dict[chat_id]+=nwarray[int(last_update['callback_query']['data'])]
