@@ -191,7 +191,7 @@ def main():
                         #last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
-                        print(mybot.send_inline_key(last_chat_id, "", [[{'text':"CNN"}, {'text':"BBC", "callback_data":'1'}, {'text':"Lenta"}, {'text':"Meduza"}]]))
+                        print(mybot.send_inline_key(last_chat_id, "", [[{'text':"CNN", 'callback_data':'0'}, {'text':"BBC", "callback_data":'1'}, {'text':"Lenta",'callback_data':'2'}, {'text':"Meduza", 'callback_data':'3'}]]))
                         if(last_text[0] == '/'):
                                 mybot.run_command(last_text,last_chat_id)
                                 offset = last_id+1
