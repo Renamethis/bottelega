@@ -97,7 +97,7 @@ class BotHandler:
         def send_inline_key(self, chat, text):
                 button = [{'text':text, 'callback_data':'Hi'}]
                 key = [button]
-                inkey = ["inline_keyboard":key]
+                inkey = {"inline_keyboard":key}
                 rpmark = json.dumps(inkey, True)
                 params = {"text":text, "chat_id":chat, 'reply_markup':rpmark} 
                 response = requests.post(self.api_url + 'sendMEssage', params)
