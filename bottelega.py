@@ -95,7 +95,7 @@ class BotHandler:
                 return "ERROR: " + code + " : " + error
         
         def send_inline_key(self, chat, text,buttons):
-                inkey = {"inline_keyboard":key}
+                inkey = {"inline_keyboard":buttons}
                 rpmark = json.dumps(inkey)
                 params = {"text":text, "chat_id":chat, 'reply_markup':rpmark} 
                 response = requests.post(self.api_url + 'sendMEssage', params)
