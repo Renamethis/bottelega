@@ -41,8 +41,11 @@ class BotHandler:
                 
         def get_updates(self,offset=None,timeout=30):
                 params = {'timeout:': timeout, 'offset': offset}
-                response = requests.get(self.api_url+'getUpdates',params)
-                return response.json()['result']
+                try:
+                        response = requests.get(self.api_url+'getUpdates',params)
+                        return response.json()['result']
+                except:
+                        return None
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
 
@@ -191,7 +194,7 @@ def main():
                         #last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
-                        print(mybot.send_inline_key(last_chat_id, "", [[{'text':"CNN", 'callback_data':'0'}, {'text':"BBC", "callback_data":'1'}, {'text':"Lenta",'callback_data':'2'}, {'text':"Meduza", 'callback_data':'3'}]]))
+                        print(mybot.send_inline_key(last_chat_id, "Hey", [[{'text':"CNN", 'callback_data':'0'}, {'text':"BBC", "callback_data":'1'}, {'text':"Lenta",'callback_data':'2'}, {'text':"Meduza", 'callback_data':'3'}]]))
                         if(last_text[0] == '/'):
                                 mybot.run_command(last_text,last_chat_id)
                                 offset = last_id+1
