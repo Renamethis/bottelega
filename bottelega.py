@@ -40,12 +40,9 @@ class BotHandler:
                         print('Шота с инициализацией переводчика')
                 
         def get_updates(self,offset=None,timeout=30):
-                try:
-                        params = {'timeout:': timeout, 'offset': offset}
-                        response = requests.get(self.api_url+'getUpdates',params)
-                        return response.json()['result']
-                except:
-                        return None
+                params = {'timeout:': timeout, 'offset': offset}
+                response = requests.get(self.api_url+'getUpdates',params)
+                return response.json()['result']
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
 
@@ -97,10 +94,9 @@ class BotHandler:
         def error(code,error):
                 return "ERROR: " + code + " : " + error
         
-        def send_inline_key(self, chat, text, buttons):
-                buttons = [{'text':'CNN', 'callback_data':'Hi'}]
-                key = [buttons]
-                inkey = {"inline_keyboard":key}
+        def send_inline_key(self, chat, text):
+                buttons = [[{'text':text, 'callback_data':'Hi'}], [{'text':text,'callback_data':'Hi'}]]
+                inkey = {"inline_keyboard":buttons}
                 rpmark = json.dumps(inkey)
                 params = {"text":text, "chat_id":chat, 'reply_markup':rpmark} 
                 response = requests.post(self.api_url + 'sendMEssage', params)
@@ -196,7 +192,7 @@ def main():
                         #last_name = last_update['message']['chat']['first_name']
                         last_chat_id = last_update['message']['chat']['id']
                         now = datetime.datetime.now()
-                        mybot.send_inline_key(last_chat_id, "test", [{'text':'CNN', 'callback_data':'Hi'}, {'text':'BBC', 'callback_data':'He'}])
+                        mybot.send_inline_key(last_chat_id, "test")
                         if(last_text[0] == '/'):
                                 mybot.run_command(last_text,last_chat_id)
                                 offset = last_id+1
