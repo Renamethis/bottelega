@@ -48,7 +48,7 @@ class BotHandler:
                         return None
 
         def cmd_settings(self, chat_id):
-                buttons = [[{'text':"CNN", 'callback_data':'0'}, {'text':"BBC", "callback_data":'1'}, {'text':"Lenta",'callback_data':'2'}, {'text':"Meduza", 'callback_data':'3'}]]
+                buttons = [[{'text':"CNN", 'callback_data':0}, {'text':"BBC", "callback_data":1}, {'text':"Lenta",'callback_data':2}, {'text':"Meduza", 'callback_data':3}, {'text':'Set up','callback_data':chat_id}]]
                 self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
@@ -194,7 +194,7 @@ def main():
         while True:
                 mybot.get_updates(offset)
                 last_update = mybot.last_update()
-                print(last_update)
+                #print(last_update)
                 if(last_update != -1 and last_update != upk):
                         try:
                                 last_id = last_update['update_id']
