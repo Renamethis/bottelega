@@ -195,24 +195,27 @@ def main():
                 last_update = mybot.last_update()
                 print(last_update)
                 if(last_update != -1):
-                        last_id = last_update['update_id']
-                        last_text = last_update['message']['text']
-                        #last_name = last_update['message']['chat']['first_name']
-                        last_chat_id = last_update['message']['chat']['id']
-                        now = datetime.datetime.now()
-                        if(last_text[0] == '/'):
-                                mybot.run_command(last_text,last_chat_id)
+                        try:
+                                last_id = last_update['update_id']
+                                last_text = last_update['message']['text']
+                                #last_name = last_update['message']['chat']['first_name']
+                                last_chat_id = last_update['message']['chat']['id']
+                                now = datetime.datetime.now()
+                                if(last_text[0] == '/'):
+                                        mybot.run_command(last_text,last_chat_id)
+                                        offset = last_id+1
+                                        continue
+                                if(6<=now.hour<12):
+                                        mybot.send_mess(last_chat_id, 'Good Morning!1')
+                                elif(12<=now.hour<17):
+                                        mybot.send_mess(last_chat_id, 'Good Day!1')
+                                elif(17<=now.hour<23):
+                                        mybot.send_mess(last_chat_id, 'Good evening!1')
+                                else:
+                                        mybot.send_mess(last_chat_id, 'Good night!1')
                                 offset = last_id+1
-                                continue
-                        if(6<=now.hour<12):
-                                mybot.send_mess(last_chat_id, 'Good Morning!1')
-                        elif(12<=now.hour<17):
-                                mybot.send_mess(last_chat_id, 'Good Day!1')
-                        elif(17<=now.hour<23):
-                                mybot.send_mess(last_chat_id, 'Good evening!1')
-                        else:
-                                mybot.send_mess(last_chat_id, 'Good night!1')
-                        offset = last_id+1
+                        except:
+                                print(last_update['callback_query']['data'])
         cursor.close()
         conn.close()
 if __name__ == '__main__':  
