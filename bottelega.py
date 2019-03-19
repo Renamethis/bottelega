@@ -48,7 +48,7 @@ class BotHandler:
                         return None
 
         def cmd_settings(self, chat_id):
-                buttons = [[{'text':"CNN", 'callback_data':0}, {'text':"BBC", "callback_data":1}, {'text':"Lenta",'callback_data':2}, {'text':"Meduza", 'callback_data':3}, {'text':'Set up','callback_data':chat_id}]]
+                buttons = [[{'text':"CNN", 'callback_data':0}, {'text':"BBC", "callback_data":1}, {'text':"Lenta",'callback_data':2}, {'text':"Meduza", 'callback_data':3}], [{'text':'Set up','callback_data':chat_id}]]
                 self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
         def cmd_help(self,chat_id):
                 self.send_mess(chat_id,helpcmdstr)	 
