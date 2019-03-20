@@ -141,10 +141,11 @@ class BotHandler:
                         cursor.execute("SELECT * FROM users")
                         records = cursor.fetchall()
                         for line in records:
-                                try:
-                                        self.send_photo(int(line[0]),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
-                                except:
-                                        print("Скорее всего БД пуста")
+                                if(line[1].find(new) != -1 or line[1] == 'all'):
+                                        try:
+                                                self.send_photo(int(line[0]),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
+                                        except:
+                                                print("Скорее всего БД пуста")
         def send_meduza_news(self):
                         rsp = requests.get(meduza)
                         news = rsp.json()['documents']
@@ -162,11 +163,12 @@ class BotHandler:
                                         cursor.execute("SELECT * FROM users")
                                         records = cursor.fetchall()
                                         for line in records:
-                                                try:
-                                                        self.send_photo(int(line[0]),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
-                                                        #self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
-                                                except:
-                                                        self.send_mess(int(line[0]),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
+                                                if(line[1].find('Meduza') != -1 or line[1] == 'all'):
+                                                        try:
+                                                                self.send_photo(int(line[0]),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
+                                                                #self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
+                                                        except:
+                                                                self.send_mess(int(line[0]),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
 
                         except:
                                 print('Что то пошло не так у Meduza')
@@ -184,6 +186,7 @@ class NewsThread(Thread):
                 while True:
                         print('checking...')
                         #Meduza.io
+                        
                         mybot.send_meduza_news()
                         #CNN
                         mybot.send_newsapi_news("CNN",cnn)
@@ -234,7 +237,7 @@ def main():
                                                 if(last_update['callback_query']['data'] != str(chat_id)):
                                                         if(mybot.dict[chat_id].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
                                                                 mybot.dict[chat_id]+=nwarray[int(last_update['callback_query']['data'])] + '\n'
-                                                                mybot.send_mess(chat_id, nwarray[int(last_update['callback_query']['data'])] + " добавлена в список новостныъ порталов")
+                                                                mybot.send_mess(chat_id, nwarray[int(last_update['callback_query']['data'])] + " добавлена в список новостных порталов")
                                                 else:
                                                         mybot.send_mess(chat_id, "Вы подписались на:\n" + mybot.dict[chat_id])
                                                         if(mybot.dict[chat_id].count('\n') == 4):
