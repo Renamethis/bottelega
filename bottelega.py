@@ -192,7 +192,7 @@ class NewsThread(Thread):
                         #Lenta
                         mybot.send_newsapi_news("Lenta", lenta)
                         #print(news[z]['title'])
-                        time.sleep(15)
+                        time.sleep(10)
 
 def main():
         upk = []
@@ -230,12 +230,19 @@ def main():
                                 if(chat_id in mybot.dict):
                                         cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                                         records = cursor.fetchall()
-                                        if(last_update['callback_query']['data'] != str(chat_id)):
-                                                if(mybot.dict[chat_id].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
-                                                        mybot.dict[chat_id]+=nwarray[int(last_update['callback_query']['data'])]
+                                        if(records):
+                                                if(last_update['callback_query']['data'] != str(chat_id)):
+                                                        if(mybot.dict[chat_id].find(nwarray[int(last_update['callback_query']['data'])]) == -1):
+                                                                mybot.dict[chat_id]+=nwarray[int(last_update['callback_query']['data'])] + '\n'
+                                                                mybot.sendMess(chat_id, nwarray[int(last_update['callback_query']['data'])] + " добавлена в список новостныъ порталов")
+                                                else:
+                                                        mybot.sendMess(chat_id, "Вы подписались на:\n" + mybot.dict[chat_id])
+                                                        if(mybot.dict[chat_id].count('\n') == 4):
+                                                                mybot.dict[chat_id] = "all"
+                                                        cursor.execute("UPDATE users SET subs = %s WHERE user_id = %s", (mybot.dict[chat_id],chat_id, ))
+                                                        del(mybot.dict[chat_id])
                                         else:
-                                                print(mybot.dict)
-                                                del(mybot.dict[chat_id])
+                                                mybot.sendMess(chat_id, "Вы не подписаны на новости!")
                                         
                         upk = last_update
         cursor.close()
