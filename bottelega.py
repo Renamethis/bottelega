@@ -130,7 +130,7 @@ class BotHandler:
                 return response
         
         def send_newsapi_news(self,new,url):
-            try:
+            #try:
                 rsp = requests.get(url)
                 news = rsp.json()['articles']
                 z = news[0]['publishedAt']
@@ -149,8 +149,8 @@ class BotHandler:
                                                 self.send_photo(int(line[0]),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                         except:
                                                 print("Скорее всего БД пуста")
-            except:
-                print("Что -то не так у " + new)
+                                                    #except:
+                                                    #print("Что -то не так у " + new)
                                                 
         def send_meduza_news(self):
                     try:
