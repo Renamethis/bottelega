@@ -11,7 +11,7 @@ import os
 import psycopg2
 from psycopg2 import sql
 url = "https://api.telegram.org/bot749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ/"
-helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей\n/settings - настроить бота"
+helpcmdstr = "/help - список всех команд\n/start - начать отправку новостей\n/settings - настроить бота\n/stop - прекратить отправку новостей"
 DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 conn.autocommit = True
@@ -55,16 +55,17 @@ class BotHandler:
                 if(records):
                         buttons = [[{'text':"CNN", 'callback_data':0}, {'text':"BBC", "callback_data":1}, {'text':"Lenta",'callback_data':2}, {'text':"Meduza", 'callback_data':3}], [{'text':'Set up','callback_data':chat_id}]]
                         self.dict[chat_id] = ""
-                        self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
+                        return self.send_inline_key(chat_id, "Выберите новостные порталы,новости с этих порталов будут отправляться ботом:",buttons)
                 else:
-                        self.send_mess(chat_id,"Для настройки бота подпишитесь на рассылку!")
+                        return self.send_mess(chat_id,"Для настройки бота подпишитесь на рассылку!")
         def cmd_help(self,chat_id):
-                self.send_mess(chat_id,helpcmdstr)	 
-
+                self.send_mess(chat_id,helpcmdstr)
         def set_keyboard(self):
                 params = {'text': '/start'}
                 response = requests.get(self.api_url+'KeyboardButton',params)                       
-	
+        def cmd_stop(self,chat_id):
+                cursor.execute("DELETE * FROM users WHERE user_id = %s", (chat_id, ))
+                self.send_mess(chat_id, "Вы отписались от отправки новостей!")
         def cmd_start(self,chat_id):
                 cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
                 records = cursor.fetchall()
@@ -88,6 +89,7 @@ class BotHandler:
                         "/help":self.cmd_help,
                         "/start":self.cmd_start,
                         "/settings":self.cmd_settings
+                        "/stop":self.cmd_stop
                 }		
 		#p = switch.get(command, lambda: send_mess(chat_id,"Не существует такой команды"))
                 k=0
@@ -128,6 +130,7 @@ class BotHandler:
                 return response
         
         def send_newsapi_news(self,new,url):
+            try:
                 rsp = requests.get(url)
                 news = rsp.json()['articles']
                 z = news[0]['publishedAt']
@@ -146,7 +149,11 @@ class BotHandler:
                                                 self.send_photo(int(line[0]),news[0]['urlToImage'],"<pre>"+new+"</pre>\n" + "<b>"+title+"</b>\n"+"<a>"+news[0]['url']+"</a>") 
                                         except:
                                                 print("Скорее всего БД пуста")
+            except:
+                   print("Что -то не так у " + new)
+                                                
         def send_meduza_news(self):
+                    try:
                         rsp = requests.get(meduza)
                         news = rsp.json()['documents']
                         z = self.zk
@@ -155,7 +162,6 @@ class BotHandler:
                                         self.max = int(news[ko]['published_at'])
                                         z = ko
                         print(self.max)
-                        try:
                                 if(self.meduza != news[z]['url']):
                                         #print(self.meduza + " " + news[z]['title'])
                                         self.meduza = news[z]['url']
@@ -211,7 +217,6 @@ def main():
                         try:
                                 last_id = last_update['update_id']
                                 last_text = last_update['message']['text']
-                                #last_name = last_update['message']['chat']['first_name']
                                 last_chat_id = last_update['message']['chat']['id']
                                 now = datetime.datetime.now()
                                 if(last_text[0] == '/'):
@@ -219,16 +224,15 @@ def main():
                                         offset = last_id+1
                                         continue
                                 if(6<=now.hour<12):
-                                        mybot.send_mess(last_chat_id, 'Good Morning!1')
+                                        mybot.send_mess(last_chat_id, 'Good Morning!')
                                 elif(12<=now.hour<17):
-                                        mybot.send_mess(last_chat_id, 'Good Day!1')
+                                        mybot.send_mess(last_chat_id, 'Good Day!')
                                 elif(17<=now.hour<23):
-                                        mybot.send_mess(last_chat_id, 'Good evening!1')
+                                        mybot.send_mess(last_chat_id, 'Good evening!')
                                 else:
-                                        mybot.send_mess(last_chat_id, 'Good night!1')
+                                        mybot.send_mess(last_chat_id, 'Good night!')
                                 offset = last_id+1
                         except:
-#                                print(last_update)
                                 chat_id = last_update['callback_query']['from']['id']
                                 if(chat_id in mybot.dict):
                                         cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
