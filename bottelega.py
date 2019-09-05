@@ -64,7 +64,7 @@ class BotHandler:
                 params = {'text': '/start'}
                 response = requests.get(self.api_url+'KeyboardButton',params)                       
         def cmd_stop(self,chat_id):
-                cursor.execute("DELETE * FROM users WHERE user_id = %s", (chat_id, ))
+                cursor.execute("DELETE FROM users WHERE user_id = %s", (chat_id, ))
                 self.send_mess(chat_id, "Вы отписались от отправки новостей!")
         def cmd_start(self,chat_id):
                 cursor.execute("SELECT * FROM users WHERE user_id = %s", (chat_id, ))
