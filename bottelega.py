@@ -132,6 +132,7 @@ class BotHandler:
         def send_newsapi_news(self,new,url):
             #try:
                 rsp = requests.get(url)
+                print(rsp.json())
                 news = rsp.json()['articles']
                 z = news[0]['publishedAt']
                 if(z!=self.newsapi[new]):
@@ -150,7 +151,7 @@ class BotHandler:
                                         except:
                                                 print("Скорее всего БД пуста")
                                                     #except:
-                                                    #print("Что -то не так у " + new)
+                                                    #print("Что-то не так у " + new)
                                                 
         def send_meduza_news(self):
                     try:
