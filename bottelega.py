@@ -150,7 +150,7 @@ class BotHandler:
                                         except:
                                                 print("Скорее всего БД пуста")
             except:
-                   print("Что -то не так у " + new)
+                print("Что -то не так у " + new)
                                                 
         def send_meduza_news(self):
                     try:
@@ -162,22 +162,22 @@ class BotHandler:
                                         self.max = int(news[ko]['published_at'])
                                         z = ko
                         print(self.max)
-                                if(self.meduza != news[z]['url']):
-                                        #print(self.meduza + " " + news[z]['title'])
-                                        self.meduza = news[z]['url']
-                                        self.zk = z
-                                        cursor.execute("SELECT * FROM users")
-                                        records = cursor.fetchall()
-                                        for line in records:
-                                                if(line[1].find('Meduza') != -1 or line[1] == 'all'):
-                                                        try:
-                                                            self.send_photo(int(line[0]),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
-                                                                #self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
-                                                        except:
-                                                                self.send_mess(int(line[0]),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
+                        if(self.meduza != news[z]['url']):
+                                #print(self.meduza + " " + news[z]['title'])
+                                self.meduza = news[z]['url']
+                                self.zk = z
+                                cursor.execute("SELECT * FROM users")
+                                records = cursor.fetchall()
+                                for line in records:
+                                        if(line[1].find('Meduza') != -1 or line[1] == 'all'):
+                                                try:
+                                                    self.send_photo(int(line[0]),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
+                                                        #self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
+                                                except:
+                                                        self.send_mess(int(line[0]),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
 
-                        except:
-                                print('Что то пошло не так у Meduza')
+                    except:
+                        print('Что то пошло не так у Meduza')
 mybot = BotHandler("749293177:AAGbvrWY1-Bw0gBGUKXfVRXQZ6ix6MIV3aQ")
 meduza = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=0&per_page=1"
 cnn = "https://newsapi.org/v2/everything?sources=cnn&apiKey=e055568e37874d9d865d30630bb92d7e"
