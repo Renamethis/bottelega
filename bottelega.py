@@ -88,7 +88,7 @@ class BotHandler:
                 switch = {
                         "/help":self.cmd_help,
                         "/start":self.cmd_start,
-                        "/settings":self.cmd_settings
+                        "/settings":self.cmd_settings,
                         "/stop":self.cmd_stop
                 }		
 		#p = switch.get(command, lambda: send_mess(chat_id,"Не существует такой команды"))
@@ -171,7 +171,7 @@ class BotHandler:
                                         for line in records:
                                                 if(line[1].find('Meduza') != -1 or line[1] == 'all'):
                                                         try:
-                                                                self.send_photo(int(line[0]),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
+                                                            self.send_photo(int(line[0]),"https://meduza.io/"+news[z]['image']['large_url'],"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>")
                                                                 #self.send_mess(int(line),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
                                                         except:
                                                                 self.send_mess(int(line[0]),"<pre>Meduza</pre>\n"+"<b>"+news[z]['title']+"</b>"+"\n<a>"+"https://meduza.io/"+news[z]['url']+"</a>" )
